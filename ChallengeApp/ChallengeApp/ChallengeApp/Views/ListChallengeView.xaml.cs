@@ -17,6 +17,7 @@ namespace ChallengeApp.Views
         {
             InitializeComponent();
 
+            // Esto debe ser un servicio
             ListChallenge.ItemsSource = new List<Challenge>
             {
                 new Challenge{ChallengeName = "Explore", ChallengePoint ="5"},
@@ -24,6 +25,7 @@ namespace ChallengeApp.Views
                 new Challenge{ChallengeName = "Demostrate", ChallengePoint = "8"}
             };
 
+            // No se si esta sea la mejor manera de mostrar el puntaje
             UserInfo userInfo = new UserInfo { UserPoints = "25" };
 
             LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
