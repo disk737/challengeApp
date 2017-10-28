@@ -1,4 +1,5 @@
 ﻿using ChallengeApp.Models;
+using ChallengeApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,10 @@ namespace ChallengeApp.Views
         {
             InitializeComponent();
 
+            var challengeServices = new ChallengeServices();
+
             // Esto debe ser un servicio
-            ListChallenge.ItemsSource = new List<Challenge>
-            {
-                new Challenge{ChallengeName = "Explore", DescripChallenge = "Debes ir a tal lado y tomar una fotografia...", EvidenChallenge = "Foto por Email", ChallengePoint ="5"},
-                new Challenge{ChallengeName ="Read", DescripChallenge = "Debes leer el capitulo y enviar un resumen...", EvidenChallenge = "Enviar resumen por Email", ChallengePoint = "3"},
-                new Challenge{ChallengeName = "Demostrate", DescripChallenge = "Realiza el experimiento 13 y enviar el resultado...", EvidenChallenge = "Foto por Email", ChallengePoint = "8"}
-            };
+            ListChallenge.ItemsSource = challengeServices.GetAllChallenges();
 
             // No se si esta sea la mejor manera de mostrar el puntaje
             UserInfo userInfo = new UserInfo { UserPoints = "25" };
