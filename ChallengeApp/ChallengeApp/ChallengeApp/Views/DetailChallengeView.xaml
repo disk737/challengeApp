@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChallengeApp.Views.DetailChallengeView"
+             Padding="10,20,10,0">
+
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+
+        <Label x:Name="LabelPoints" HorizontalOptions="End"/>
+
+        <Label Text="{Binding DescripChallenge}"/>
+        <Label Text="{Binding EvidenChallenge}"/>
+        <Label Text="{Binding ChallengePoint}"/>
+
+        <Button Text="Aceptar"/>
+
+    </StackLayout>
+    
+</ContentPage>
