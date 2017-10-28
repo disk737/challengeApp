@@ -10,7 +10,7 @@ namespace ChallengeApp.Services
     public class ChallengeServices
     {
         
-        // Esto debe venir de unb servicio
+        // Esto debe venir de un servicio
         List<Challenge> ListChallenge = new List<Challenge>
             {
                 new Challenge{ChallengeName = "Explore", DescripChallenge = "Debes ir a tal lado y tomar una fotografia...", EvidenChallenge = "Foto por Email", ChallengePoint ="5"},
