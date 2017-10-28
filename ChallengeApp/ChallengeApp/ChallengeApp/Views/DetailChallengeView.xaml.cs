@@ -24,5 +24,11 @@ namespace ChallengeApp.Views
 
             LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
         }
+
+        async private void AcceptChallengeHandler(object sender, EventArgs e)
+        {
+            await DisplayAlert("Challenge", "I Accept Your Challenge", "OK");
+
+        }
     }
 }
