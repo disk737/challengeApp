@@ -2,18 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChallengeApp.Views.DetailChallengeView"
-             Padding="10,20,10,0">
+             Padding="10,0,10,0">
 
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+    <Grid>
 
-        <Label x:Name="LabelPoints" HorizontalOptions="End"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Label Text="{Binding DescripChallenge}"/>
-        <Label Text="{Binding EvidenChallenge}"/>
-        <Label Text="{Binding ChallengePoint}"/>
+        <StackLayout Grid.Row="0" Orientation="Horizontal" BackgroundColor="Silver">
+            <Label x:Name="LabelPoints" HorizontalOptions="EndAndExpand"/>
+        </StackLayout>
 
-        <Button Text="Aceptar"/>
+        <StackLayout Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Aqua">
+            <Label Text="¿Que debes hacer?" 
+               FontAttributes="Bold" 
+               FontSize="Large" 
+               HorizontalTextAlignment="Center"/>
+            
+            <Label Text="{Binding DescripChallenge}" 
+                   HorizontalTextAlignment="Center"
+                   FontSize="Medium"/>
 
-    </StackLayout>
+            <Label Text="¿Como lo demuestras?" 
+               FontAttributes="Bold" 
+               FontSize="Large" 
+               HorizontalTextAlignment="Center"/>
+            
+            <Label Text="{Binding EvidenChallenge}" 
+                   HorizontalTextAlignment="Center"
+                   FontSize="Medium"/>
+
+            <Label Text="{Binding ChallengePoint, StringFormat='Points: {0}'}" 
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
+
+            <Button Text="Aceptar" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+        
+    </Grid>
     
 </ContentPage>
