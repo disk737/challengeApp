@@ -13,7 +13,7 @@ namespace ChallengeApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ChallengeApp.Views.ListChallengeView());
+            MainPage = new NavigationPage(new ChallengeApp.Views.MainTabView());
         }
 
         protected override void OnStart()
