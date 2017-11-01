@@ -28,7 +28,7 @@ namespace ChallengeApp.Views
 
         async private void ListChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            // Eso lo debo de hacer para que no me levante otra vista 
+            // Eso lo debo de hacer para que no me levante otra vista cuando haga la deseleccion
             if (ListChallenge.SelectedItem == null)
                 return;
 
