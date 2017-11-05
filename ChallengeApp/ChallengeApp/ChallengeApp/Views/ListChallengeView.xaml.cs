@@ -1,7 +1,7 @@
 ﻿using ChallengeApp.Models;
 using ChallengeApp.Services;
 using System;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,20 +10,32 @@ namespace ChallengeApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListChallengeView : ContentPage
     {
+        public List<Challenge> listChallenge { get; set; }
+
         public ListChallengeView()
         {
             InitializeComponent();
-
-            var challengeServices = new ChallengeServices();
-
-            // Esto debe ser un servicio
-            ListChallenge.ItemsSource = challengeServices.GetAllChallenges();
 
             // No se si esta sea la mejor manera de mostrar el puntaje
             UserInfo userInfo = new UserInfo { UserPoints = "25" };
 
             LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
 
+        }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Creo la clas eque llama el servicio
+            var challengeServices = new ChallengeServices();
+
+            // Creo una lista que me guarde los Challenge
+            listChallenge = new List<Challenge>();
+
+            listChallenge = await challengeServices.GetAllChallenges();
+
+            ListChallenge.ItemsSource = listChallenge;
         }
 
         async private void ListChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)

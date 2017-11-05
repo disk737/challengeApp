@@ -21,7 +21,7 @@
                FontSize="Large" 
                HorizontalTextAlignment="Center"/>
             
-            <Label Text="{Binding DescripChallenge}" 
+            <Label Text="{Binding ChallengeDescription}" 
                    HorizontalTextAlignment="Center"
                    FontSize="Medium"/>
 
@@ -30,7 +30,7 @@
                FontSize="Large" 
                HorizontalTextAlignment="Center"/>
             
-            <Label Text="{Binding EvidenChallenge}" 
+            <Label Text="{Binding ChallengeEvidence}" 
                    HorizontalTextAlignment="Center"
                    FontSize="Medium"/>
 
