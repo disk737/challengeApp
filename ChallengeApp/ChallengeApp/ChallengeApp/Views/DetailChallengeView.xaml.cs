@@ -20,7 +20,7 @@ namespace ChallengeApp.Views
             BindingContext = challenge;
 
             // No se si esta sea la mejor manera de mostrar el puntaje
-            UserInfo userInfo = new UserInfo { UserPoints = "25" };
+            User userInfo = new User { UserPoints = "25" };
 
             LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
         }
@@ -28,6 +28,8 @@ namespace ChallengeApp.Views
         async private void AcceptChallengeHandler(object sender, EventArgs e)
         {
             await DisplayAlert("Challenge", "I Accept Your Challenge", "OK");
+
+            // Desde aqui debo conseguir el token que me da el servidor 
 
         }
     }
