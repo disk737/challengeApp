@@ -15,6 +15,18 @@ namespace ChallengeApp.Views
         public MainTabView()
         {
             InitializeComponent();
+
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();
+
+            DisplayAlert("Challenge", userToken, "OK");
+                // Guardo el token generado para el usuario
+                 
         }
     }
 }

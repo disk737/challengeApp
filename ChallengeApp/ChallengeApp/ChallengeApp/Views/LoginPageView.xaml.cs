@@ -38,6 +38,9 @@ namespace ChallengeApp.Views
                 // Operacion Exitosa
                 //await DisplayAlert("Challenge", userToken.Token, "OK");
 
+                // Guardo el token generado para el usuario
+                Application.Current.Properties[Constans.UserTokenString] = userToken.Token;
+
                 // Llamo la pagina principal de Tabs
                 await Navigation.PushAsync(new MainTabView());
             }
