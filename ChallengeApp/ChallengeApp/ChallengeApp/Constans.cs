@@ -12,5 +12,6 @@ namespace ChallengeApp
 
         // URL de la API Challenge
         public static string GetAllChallenges = "/challenge/leader/consultarReto";
+        public static string UserSignIn = "/challenge/user/ingresarUsuario";
     }
 }
