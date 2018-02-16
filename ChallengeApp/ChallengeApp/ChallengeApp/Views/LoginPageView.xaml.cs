@@ -35,8 +35,6 @@ namespace ChallengeApp.Views
             // Reviso si obtengo un Token o un mensaje de error
             if (userToken.Token != null)
             {
-                // Operacion Exitosa
-                //await DisplayAlert("Challenge", userToken.Token, "OK");
 
                 // Guardo el token generado para el usuario
                 Application.Current.Properties[Constans.UserTokenString] = userToken.Token;

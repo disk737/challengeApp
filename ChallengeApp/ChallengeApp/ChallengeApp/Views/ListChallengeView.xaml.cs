@@ -10,7 +10,7 @@ namespace ChallengeApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListChallengeView : ContentPage
     {
-        public List<Challenge> listChallenge { get; set; }
+        private List<Challenge> listChallenge { get; set; }
 
         public ListChallengeView()
         {
@@ -20,12 +20,15 @@ namespace ChallengeApp.Views
             User userInfo = new User { UserPoints = "25" };
 
             LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
-
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+
+            // Reviso si la lista fue cargada en un momento anterior
+            if (listChallenge != null)
+                return;
 
             // Creo la clas eque llama el servicio
             var challengeServices = new ChallengeServices();

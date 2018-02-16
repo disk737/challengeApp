@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace ChallengeApp.Services
 {
@@ -15,6 +17,48 @@ namespace ChallengeApp.Services
         // Creo el cliente Http para realizar las peticiones
         private HttpClient client = new HttpClient();
 
+        // Metodo para obtener la lista de Challenges aceptados por el usuario
+        public async Task<List<Challenge>> GetChallengeList()
+        {
+            // Capturo el Token guardado
+            string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();
+
+            // Incluyo el Token de autentificacion en el encabezado
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
+
+            // Creo la lista para contener el resultado
+            List<Challenge> DataChallenge = new List<Challenge>();
+
+            // Construyo la URI de consulta
+            var uri = new Uri(string.Format(Constans.RestUrl + Constans.GetUserChallenges));
+ 
+            // Indico que se realiza una peticion
+            Debug.WriteLine("Peticion GetChallengeList");
+
+            // Hago la llamada al WS
+            try
+            {
+                var response = await client.GetAsync(uri);
+
+                // Espero una respuesta positiva del servidor (200)
+                if (response.IsSuccessStatusCode)
+                {
+                    // Capturo la respuesta del servidor
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    DataChallenge = ((ListChallenge)JsonConvert.DeserializeObject<ListChallenge>(content)).Challenge;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"				ERROR {0}", ex.Message);
+            }
+
+            return DataChallenge;
+        }
+
+        // Metodo para obtener el Token de Logueo del usuario
         public async Task<UserToken> UserSignIn(string argUserEmail, string argUserPassword)
         {
             // Creo un onjeto para guardar la info del usuario

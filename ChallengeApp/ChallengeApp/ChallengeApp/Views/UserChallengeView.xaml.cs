@@ -1,4 +1,5 @@
 ﻿using ChallengeApp.Models;
+using ChallengeApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,11 @@ namespace ChallengeApp.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserChallengesView : ContentPage
 	{
-		public UserChallengesView ()
+        private UserServices _userServices;
+
+        private List<Challenge> listChallenge { get; set; }
+
+        public UserChallengesView ()
 		{
 			InitializeComponent ();
 
@@ -24,8 +29,33 @@ namespace ChallengeApp.Views
 
         }
 
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Reviso si la lista fue cargada en un momento anterior
+            if (listChallenge != null)
+                return;
+
+            _userServices = new UserServices();
+
+            // Creo una lista que me guarde los Challenge
+            listChallenge = new List<Challenge>();
+
+            listChallenge = await _userServices.GetChallengeList();
+
+            ListChallenge.ItemsSource = listChallenge;
+        }
+
         async private void ListChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            // Eso lo debo de hacer para que no me levante otra vista cuando haga la deseleccion
+            if (ListChallenge.SelectedItem == null)
+                return;
+
+            // Deselecciono el elemento de la lista
+            ListChallenge.SelectedItem = null;
+
             var challenge = e.SelectedItem as Challenge;
 
             await Navigation.PushAsync(new DetailChallengeView(challenge));
