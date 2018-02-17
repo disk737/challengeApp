@@ -16,6 +16,8 @@ namespace ChallengeApp
         public static string UserSignIn = "/challenge/user/ingresarUsuario";
         public static string GetUserChallenges = "/challenge/user/consultarReto";
 
+        public static string AcceptChallengeUser = "/challenge/user/aceptarReto";
+
         // Cadena que guarda el Token de seguridad
         public static string UserTokenString = "UserToken";
     }

@@ -18,7 +18,7 @@ namespace ChallengeApp.Services
         private HttpClient client = new HttpClient();
 
         // Metodo para obtener la lista de Challenges aceptados por el usuario
-        public async Task<List<Challenge>> GetChallengeList()
+        public async Task<List<Challenge>> GetUserChallengeList()
         {
             // Capturo el Token guardado
             string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();

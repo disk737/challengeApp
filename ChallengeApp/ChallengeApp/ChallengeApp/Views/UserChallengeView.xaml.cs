@@ -11,6 +11,8 @@ using Xamarin.Forms.Xaml;
 
 namespace ChallengeApp.Views
 {
+    // Actividad que contiene la lista de los retos aceptados por el usuario
+
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserChallengesView : ContentPage
 	{
@@ -42,7 +44,7 @@ namespace ChallengeApp.Views
             // Creo una lista que me guarde los Challenge
             listChallenge = new List<Challenge>();
 
-            listChallenge = await _userServices.GetChallengeList();
+            listChallenge = await _userServices.GetUserChallengeList();
 
             ListChallenge.ItemsSource = listChallenge;
         }
