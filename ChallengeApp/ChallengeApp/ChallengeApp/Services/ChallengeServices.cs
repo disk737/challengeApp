@@ -20,11 +20,17 @@ namespace ChallengeApp.Services
         {
             List<Challenge> DataChallenge = new List<Challenge>();
 
+            // Capturo el Token guardado
+            string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();
+
+            // Incluyo el Token de autentificacion en el encabezado
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
+
             // Construyo la URI a consultar
-            var uri = new Uri(string.Format(Constans.RestUrl + Constans.GetAllChallenges));
+            var uri = new Uri(string.Format(Constans.RestUrl + Constans.GetOtherChallenges));
 
             // Indico que se realiza una peticion
-            Debug.WriteLine("Peticion GetAllChallenges");
+            Debug.WriteLine("Peticion GetOtherChallenges");
 
             // Hago la llamada al WS
             try
@@ -34,7 +40,6 @@ namespace ChallengeApp.Services
                 // Espero una respuesta positiva del servidor (200)
                 if (response.IsSuccessStatusCode)
                 {
-
                     var content = await response.Content.ReadAsStringAsync();
 
                     DataChallenge = ((ListChallenge)JsonConvert.DeserializeObject<ListChallenge>(content)).Challenge;
