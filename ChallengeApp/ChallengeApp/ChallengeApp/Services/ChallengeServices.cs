@@ -20,7 +20,7 @@ namespace ChallengeApp.Services
         {
             List<Challenge> DataChallenge = new List<Challenge>();
 
-            // Capturo el Token guardado
+            // Capturo el Token guardado en la aplicacion
             string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();
 
             // Incluyo el Token de autentificacion en el encabezado
