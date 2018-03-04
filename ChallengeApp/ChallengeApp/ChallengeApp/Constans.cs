@@ -23,5 +23,8 @@ namespace ChallengeApp
         
         // Cadena que guarda el Token de seguridad
         public static string UserTokenString = "UserToken";
+
+        // Guardo la cadena que que representa un reto guardado
+        public static string UserChallenge = "UserChallenge";
     }
 }

@@ -15,7 +15,6 @@ namespace ChallengeApp.Views
         public MainTabView()
         {
             InitializeComponent();
-
         }
 
         protected override void OnAppearing()

@@ -1,7 +1,9 @@
 ﻿using ChallengeApp.Models;
 using ChallengeApp.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +12,8 @@ namespace ChallengeApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListChallengeView : ContentPage
     {
-        private List<Challenge> listChallenge { get; set; }
+        private List<Challenge> _listChallenge { get; set; }
+        private ObservableCollection<Challenge> _obsListChallenge { get; set; }
 
         public ListChallengeView()
         {
@@ -27,18 +30,19 @@ namespace ChallengeApp.Views
             base.OnAppearing();
 
             // Reviso si la lista fue cargada en un momento anterior
-            if (listChallenge != null)
+            if (_obsListChallenge != null)
                 return;
 
             // Creo la clas eque llama el servicio
             var challengeServices = new ChallengeServices();
 
+            // Obtengo la lista de retos desde el servicio
+            _listChallenge = await challengeServices.GetAllChallenges();
+
             // Creo una lista que me guarde los Challenge
-            listChallenge = new List<Challenge>();
+            _obsListChallenge = new ObservableCollection<Challenge>(_listChallenge);
 
-            listChallenge = await challengeServices.GetAllChallenges();
-
-            ListChallenge.ItemsSource = listChallenge;
+            ListChallenge.ItemsSource = _obsListChallenge;
         }
 
         async private void ListChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -51,12 +55,26 @@ namespace ChallengeApp.Views
             ListChallenge.SelectedItem = null;
 
             // Capturo el elemento seleccionado
-            var challenge = e.SelectedItem as Challenge;
+            var selChallenge = e.SelectedItem as Challenge;
+
+            // Creo la pagina de Detalles y agrego contenido al Handler para tener la referencia de la lista
+            var detailPage = new DetailChallengeView(selChallenge);
+
+            // Agrego el Handler a la pagina creada
+            detailPage.ChallengeAdded += (source, challenge) =>
+            {
+                // Remuevo el reto a la lista de aceptados
+                _obsListChallenge.Remove(challenge);
+
+                // Guardo el reto para que pueda ser pasado a la otra lista
+                Application.Current.Properties[Constans.UserChallenge] = JsonConvert.SerializeObject(challenge);
+
+            };
 
             // Llamo a la pagina de detalles
-            await Navigation.PushAsync(new DetailChallengeView(challenge));
+            // await Navigation.PushAsync(new DetailChallengeView(selChallenge));
+            await Navigation.PushAsync(detailPage);
 
-            
         }
     }
 }
