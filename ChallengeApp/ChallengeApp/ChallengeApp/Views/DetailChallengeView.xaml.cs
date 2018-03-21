@@ -16,9 +16,12 @@ namespace ChallengeApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DetailChallengeView : ContentPage
     {
-        ChallengeServices _challengeServices;
+        // Creo variables para guardar los servicios y los retos
+        private ChallengeServices _challengeServices;
+        private Challenge _challenge;
 
-        Challenge _challenge;
+        //Expongo un event Handler para que la pagina principal pueda tomar los datos
+        public event EventHandler<Challenge> ChallengeAdded;
 
         public DetailChallengeView(Challenge argChallenge)
         {
@@ -44,15 +47,18 @@ namespace ChallengeApp.Views
             //await DisplayAlert("Challenge", "I Accept Your Challenge", "OK");
             var ServiceReponse = await _challengeServices.AcceptChallengeUser(_challenge);
 
-            // TODO: Debo tratar la respuesta del servicio
+            // Pregunto por la respuesta del servicio
             if (ServiceReponse == true)
             {
+                ChallengeAdded?.Invoke(this, _challenge);
                 await DisplayAlert("Challenge", "I Accept Your Challenge!", "OK");
             }
             else
             {
                 await DisplayAlert("Error", "Ooops, Something is wrong, please try later.","OK");
             }
+
+
 
             // TODO: Actualizar la lista de retos aceptados
         

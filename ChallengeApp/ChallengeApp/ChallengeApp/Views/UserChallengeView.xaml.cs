@@ -1,7 +1,9 @@
 ﻿using ChallengeApp.Models;
 using ChallengeApp.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +18,9 @@ namespace ChallengeApp.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class UserChallengesView : ContentPage
 	{
-        private UserServices _userServices;
 
-        private List<Challenge> listChallenge { get; set; }
+        private List<Challenge> _listChallenge { get; set; }
+        private ObservableCollection<Challenge> _obsListChallenge { get; set; }
 
         public UserChallengesView ()
 		{
@@ -36,17 +38,30 @@ namespace ChallengeApp.Views
             base.OnAppearing();
 
             // Reviso si la lista fue cargada en un momento anterior
-            if (listChallenge != null)
-                return;
+            if (_obsListChallenge != null)
+            {
+                // Reviso si debo añadir otro challenge a la lista
+                if (Application.Current.Properties.ContainsKey(Constans.UserChallenge))
+                {
+                    string txtChallenge = Application.Current.Properties[Constans.UserChallenge].ToString();
+                    _obsListChallenge.Add(JsonConvert.DeserializeObject<Challenge>(txtChallenge));
 
-            _userServices = new UserServices();
+                    // Borro el contenido de la variable
+                    Application.Current.Properties.Remove(Constans.UserChallenge);
+                }
+
+                return;
+            };
+
+            var userServices = new UserServices();
 
             // Creo una lista que me guarde los Challenge
-            listChallenge = new List<Challenge>();
+            _listChallenge = await userServices.GetUserChallengeList();
 
-            listChallenge = await _userServices.GetUserChallengeList();
+            // Creo una lista que me guarde los Challenge seleccionados por el usuario
+            _obsListChallenge = new ObservableCollection<Challenge>(_listChallenge);
 
-            ListChallenge.ItemsSource = listChallenge;
+            ListChallenge.ItemsSource = _obsListChallenge;
         }
 
         async private void ListChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -58,9 +73,9 @@ namespace ChallengeApp.Views
             // Deselecciono el elemento de la lista
             ListChallenge.SelectedItem = null;
 
-            var challenge = e.SelectedItem as Challenge;
+            var selChallenge = e.SelectedItem as Challenge;
 
-            await Navigation.PushAsync(new DetailChallengeView(challenge));
+            await Navigation.PushAsync(new DetailChallengeView(selChallenge));
         }
     }
 }
