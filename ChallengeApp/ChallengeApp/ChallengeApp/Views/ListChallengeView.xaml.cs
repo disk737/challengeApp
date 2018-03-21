@@ -8,6 +8,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ChallengeApp.Views
+
+    // Catividad que contiene todas los retos que el usuario no ha aceptado
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ListChallengeView : ContentPage
