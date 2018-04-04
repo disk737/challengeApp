@@ -75,7 +75,7 @@ namespace ChallengeApp.Views
 
             var selChallenge = e.SelectedItem as Challenge;
 
-            await Navigation.PushAsync(new DetailChallengeView(selChallenge));
+            await Navigation.PushAsync(new DetailChallengeView(selChallenge, false)); //-> False: quiero que el boton no se muestre
         }
     }
 }

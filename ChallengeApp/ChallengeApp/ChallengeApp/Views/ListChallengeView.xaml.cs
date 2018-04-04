@@ -35,7 +35,7 @@ namespace ChallengeApp.Views
             if (_obsListChallenge != null)
                 return;
 
-            // Creo la clas eque llama el servicio
+            // Creo la clase que llama el servicio
             var challengeServices = new ChallengeServices();
 
             // Obtengo la lista de retos desde el servicio
@@ -60,7 +60,7 @@ namespace ChallengeApp.Views
             var selChallenge = e.SelectedItem as Challenge;
 
             // Creo la pagina de Detalles y agrego contenido al Handler para tener la referencia de la lista
-            var detailPage = new DetailChallengeView(selChallenge);
+            var detailPage = new DetailChallengeView(selChallenge, true); //-> True: Para que se muestre siempre
 
             // Agrego el Handler a la pagina creada
             detailPage.ChallengeAdded += (source, challenge) =>
