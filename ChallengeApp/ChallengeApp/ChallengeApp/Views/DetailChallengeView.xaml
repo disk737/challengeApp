@@ -39,7 +39,10 @@
                    FontAttributes="Bold"
                    FontSize="Medium"/>
 
-            <Button Text="Aceptar" HorizontalOptions="FillAndExpand" Clicked="AcceptChallengeHandler"/>
+            <Button x:Name="btnAccept" 
+                    Text="Aceptar" 
+                    HorizontalOptions="FillAndExpand" 
+                    Clicked="AcceptChallengeHandler" />
         </StackLayout>
         
     </Grid>

@@ -23,7 +23,7 @@ namespace ChallengeApp.Views
         //Expongo un event Handler para que la pagina principal pueda tomar los datos
         public event EventHandler<Challenge> ChallengeAdded;
 
-        public DetailChallengeView(Challenge argChallenge)
+        public DetailChallengeView(Challenge argChallenge, bool argExist)
         {
             InitializeComponent();
 
@@ -36,6 +36,9 @@ namespace ChallengeApp.Views
             // Creo el objeto HTTP para acceder a los servicios
             _challengeServices = new ChallengeServices();
 
+            // Reviso si la bandera fue activada en la lista de UserChallenge
+            btnAccept.IsVisible = argExist;
+           
             // No se si esta sea la mejor manera de mostrar el puntaje
             User userInfo = new User { UserPoints = "25" };
 
@@ -50,18 +53,21 @@ namespace ChallengeApp.Views
             // Pregunto por la respuesta del servicio
             if (ServiceReponse == true)
             {
+                // Invoco el handler que se encuentra en la actividad vista ListChallengeView
                 ChallengeAdded?.Invoke(this, _challenge);
+
+                // Desactivo el boton para que el usuario no pueda activarlo de nuevo
+                btnAccept.IsVisible = false;
+
+                // Envio un mensaje de confirmacion
                 await DisplayAlert("Challenge", "I Accept Your Challenge!", "OK");
+
+
             }
             else
             {
                 await DisplayAlert("Error", "Ooops, Something is wrong, please try later.","OK");
             }
-
-
-
-            // TODO: Actualizar la lista de retos aceptados
-        
 
         }
     }
