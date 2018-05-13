@@ -20,11 +20,16 @@ namespace ChallengeApp.Views
 	{
 
         private List<Challenge> _listChallenge { get; set; }
-        private ObservableCollection<Challenge> _obsListChallenge { get; set; }
+        private ObservableCollection<Challenge> _obsUserListChallenge { get; set; }
+
+        private List<Challenge> _quittedListChallenge { get; set; }
 
         public UserChallengesView ()
 		{
 			InitializeComponent ();
+
+            // Inicializo la lista de Retos Rechazados
+            _quittedListChallenge = new List<Challenge>();
 
             // No se si esta sea la mejor manera de mostrar el puntaje
             User userInfo = new User { UserPoints = "25" };
@@ -37,17 +42,42 @@ namespace ChallengeApp.Views
         {
             base.OnAppearing();
 
+            // Borro el contenido del array auxiliar si hubo un cambio en la Actividad
+            if (Application.Current.Properties.ContainsKey(Constans.FlagUserList))
+            {
+
+                // Reviso si la bandera esta en True
+                if ((Application.Current.Properties[Constans.FlagUserList].ToString() == "true"))
+                {
+                    // Borro el contenido del array y bajo la bandera
+                    _quittedListChallenge.Clear();
+                    Application.Current.Properties[Constans.FlagUserList] = "false";
+                }
+
+            }
+
             // Reviso si la lista fue cargada en un momento anterior
-            if (_obsListChallenge != null)
+            if (_obsUserListChallenge != null)
             {
                 // Reviso si debo añadir otro challenge a la lista
-                if (Application.Current.Properties.ContainsKey(Constans.UserChallenge))
+                if (Application.Current.Properties.ContainsKey(Constans.AcceptChallengeUser))
                 {
-                    string txtChallenge = Application.Current.Properties[Constans.UserChallenge].ToString();
-                    _obsListChallenge.Add(JsonConvert.DeserializeObject<Challenge>(txtChallenge));
+                    string txtChallenge = Application.Current.Properties[Constans.AcceptChallengeUser].ToString();
 
+                    // Deserializo el array de Retos aceptados por el usuario
+                    List<Challenge> AuxChallengeList = JsonConvert.DeserializeObject<List<Challenge>>(txtChallenge);
+
+                    // Ingreso todos los Retos añadidos la actividad ListChallengeView
+                    foreach (var item in AuxChallengeList)
+                    {
+                        _obsUserListChallenge.Add(item);
+                    }
+                   
                     // Borro el contenido de la variable
-                    Application.Current.Properties.Remove(Constans.UserChallenge);
+                    Application.Current.Properties.Remove(Constans.AcceptChallengeUser);
+
+                    // Cambio la bandera indicando que ya se actualizaron las Aceptaciones
+                    Application.Current.Properties[Constans.FlagChallengeList] = "true";
                 }
 
                 return;
@@ -59,12 +89,20 @@ namespace ChallengeApp.Views
             _listChallenge = await userServices.GetUserChallengeList();
 
             // Creo una lista que me guarde los Challenge seleccionados por el usuario
-            _obsListChallenge = new ObservableCollection<Challenge>(_listChallenge);
+            _obsUserListChallenge = new ObservableCollection<Challenge>(_listChallenge);
 
-            ListChallenge.ItemsSource = _obsListChallenge;
+            ListChallenge.ItemsSource = _obsUserListChallenge;
         }
 
-        async private void ListChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            // Borro el contenido de los array temporales
+            //_quittedListChallenge.Clear();
+        }
+
+        async private void UserChallenge_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             // Eso lo debo de hacer para que no me levante otra vista cuando haga la deseleccion
             if (ListChallenge.SelectedItem == null)
@@ -75,7 +113,24 @@ namespace ChallengeApp.Views
 
             var selChallenge = e.SelectedItem as Challenge;
 
-            await Navigation.PushAsync(new DetailChallengeView(selChallenge, false)); //-> False: quiero que el boton no se muestre
+            // Creo la pagina de detalles que va ser abierta
+            var detailPage = new DetailChallengeView(selChallenge, false); //-> False: Indico que estoy llamando desde UserChallengeList
+
+            // Agrego el Handler creado a la pagina de detalles
+            detailPage.ChallengeQuitted += (source, challenge) =>
+            {
+                // Remuevo el Challenge de esta lista
+                _obsUserListChallenge.Remove(challenge);
+
+                // Agrego el Challenge a la lista de Rechazados
+                _quittedListChallenge.Add(challenge);
+
+                // Guardo el arreglo de Challenge para que pueda ser pasado a la otra lista
+                Application.Current.Properties[Constans.QuitChallengeUser] = JsonConvert.SerializeObject(_quittedListChallenge, Formatting.Indented);
+
+            };
+
+            await Navigation.PushAsync(detailPage); 
         }
     }
 }

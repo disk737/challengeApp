@@ -20,14 +20,17 @@ namespace ChallengeApp.Views
         private ChallengeServices _challengeServices;
         private Challenge _challenge;
 
-        //Expongo un event Handler para que la pagina principal pueda tomar los datos
+        //Expongo un event Handler para que la pagina ListChallengeView pueda tomar los datos
         public event EventHandler<Challenge> ChallengeAdded;
 
-        public DetailChallengeView(Challenge argChallenge, bool argExist)
+        //Expongo un event Handler para que la pagina ListChallengeView pueda tomar los datos
+        public event EventHandler<Challenge> ChallengeQuitted;
+
+        public DetailChallengeView(Challenge argChallenge, bool argExist) // argExist: me indica si esta pagina fue llamada en ListChallege o UserChallenge
         {
             InitializeComponent();
 
-            // Guardo la info del Challenge aceptado
+            // Guardo la info del Challenge seleccionado
             _challenge = argChallenge;
 
             // Asgino el Challenge al Binding Context
@@ -36,8 +39,9 @@ namespace ChallengeApp.Views
             // Creo el objeto HTTP para acceder a los servicios
             _challengeServices = new ChallengeServices();
 
-            // Reviso si la bandera fue activada en la lista de UserChallenge
+            // Reviso si la pagina fue llamada en ListChallege o UserChallenge
             btnAccept.IsVisible = argExist;
+            btnQuit.IsVisible = !argExist;
            
             // No se si esta sea la mejor manera de mostrar el puntaje
             User userInfo = new User { UserPoints = "25" };
@@ -45,9 +49,10 @@ namespace ChallengeApp.Views
             LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
         }
 
+        // Metodo que se encarga de manejar el evento de aceptar el reto
         async private void AcceptChallengeHandler(object sender, EventArgs e)
         {
-            //await DisplayAlert("Challenge", "I Accept Your Challenge", "OK");
+            // Invoco el servicio que acepta el reto en la DB
             var ServiceReponse = await _challengeServices.AcceptChallengeUser(_challenge);
 
             // Pregunto por la respuesta del servicio
@@ -58,10 +63,10 @@ namespace ChallengeApp.Views
 
                 // Desactivo el boton para que el usuario no pueda activarlo de nuevo
                 btnAccept.IsVisible = false;
+                btnQuit.IsVisible = true;
 
                 // Envio un mensaje de confirmacion
                 await DisplayAlert("Challenge", "I Accept Your Challenge!", "OK");
-
 
             }
             else
@@ -70,5 +75,33 @@ namespace ChallengeApp.Views
             }
 
         }
+
+        // Metodo que se encarga del metodo de renunciar al reto
+        async private void QuitChallengeHandler(object sender, EventArgs e)
+        {
+            // Invoco el servicio que renuncia el reto en la base de datos
+            var ServiceReponse = await _challengeServices.QuitChallengeUser(_challenge);
+
+            // Pregunto por la respuesta del servicio
+            if (ServiceReponse == true)
+            {
+                // Invoco el handler que se encuentra en la actividad vista ListChallengeView
+                ChallengeQuitted?.Invoke(this, _challenge);
+
+                // Desactivo el boton para que el usuario no pueda activarlo de nuevo
+                btnAccept.IsVisible = true;
+                btnQuit.IsVisible = false;
+
+                // Envio un mensaje de confirmacion
+                await DisplayAlert("Challenge", "Are you too scare??", "Yes I'm");
+
+            }
+            else
+            {
+                await DisplayAlert("Error", "Ooops, Something is wrong, please try later.", "OK");
+            }
+        }
+
+
     }
 }

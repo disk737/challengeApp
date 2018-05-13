@@ -40,9 +40,14 @@
                    FontSize="Medium"/>
 
             <Button x:Name="btnAccept" 
-                    Text="Aceptar" 
+                    Text="Accept" 
                     HorizontalOptions="FillAndExpand" 
                     Clicked="AcceptChallengeHandler" />
+
+            <Button x:Name="btnQuit" 
+                    Text="Quit" 
+                    HorizontalOptions="FillAndExpand" 
+                    Clicked="QuitChallengeHandler" />
         </StackLayout>
         
     </Grid>
