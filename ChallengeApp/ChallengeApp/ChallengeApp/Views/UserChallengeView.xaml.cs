@@ -20,16 +20,10 @@ namespace ChallengeApp.Views
 	{
 
         private List<Challenge> _listChallenge { get; set; }
-        private ObservableCollection<Challenge> _obsUserListChallenge { get; set; }
-
-        private List<Challenge> _quittedListChallenge { get; set; }
 
         public UserChallengesView ()
 		{
 			InitializeComponent ();
-
-            // Inicializo la lista de Retos Rechazados
-            _quittedListChallenge = new List<Challenge>();
 
             // No se si esta sea la mejor manera de mostrar el puntaje
             User userInfo = new User { UserPoints = "25" };
@@ -42,46 +36,9 @@ namespace ChallengeApp.Views
         {
             base.OnAppearing();
 
-            // Borro el contenido del array auxiliar si hubo un cambio en la Actividad
-            if (Application.Current.Properties.ContainsKey(Constans.FlagUserList))
-            {
-
-                // Reviso si la bandera esta en True
-                if ((Application.Current.Properties[Constans.FlagUserList].ToString() == "true"))
-                {
-                    // Borro el contenido del array y bajo la bandera
-                    _quittedListChallenge.Clear();
-                    Application.Current.Properties[Constans.FlagUserList] = "false";
-                }
-
-            }
-
             // Reviso si la lista fue cargada en un momento anterior
-            if (_obsUserListChallenge != null)
-            {
-                // Reviso si debo añadir otro challenge a la lista
-                if (Application.Current.Properties.ContainsKey(Constans.AcceptChallengeUser))
-                {
-                    string txtChallenge = Application.Current.Properties[Constans.AcceptChallengeUser].ToString();
-
-                    // Deserializo el array de Retos aceptados por el usuario
-                    List<Challenge> AuxChallengeList = JsonConvert.DeserializeObject<List<Challenge>>(txtChallenge);
-
-                    // Ingreso todos los Retos añadidos la actividad ListChallengeView
-                    foreach (var item in AuxChallengeList)
-                    {
-                        _obsUserListChallenge.Add(item);
-                    }
-                   
-                    // Borro el contenido de la variable
-                    Application.Current.Properties.Remove(Constans.AcceptChallengeUser);
-
-                    // Cambio la bandera indicando que ya se actualizaron las Aceptaciones
-                    Application.Current.Properties[Constans.FlagChallengeList] = "true";
-                }
-
+            if (SingletonChallenge.Instance._obsUserListChallenge != null)
                 return;
-            };
 
             var userServices = new UserServices();
 
@@ -89,9 +46,9 @@ namespace ChallengeApp.Views
             _listChallenge = await userServices.GetUserChallengeList();
 
             // Creo una lista que me guarde los Challenge seleccionados por el usuario
-            _obsUserListChallenge = new ObservableCollection<Challenge>(_listChallenge);
+            SingletonChallenge.Instance._obsUserListChallenge = new ObservableCollection<Challenge>(_listChallenge);
 
-            ListChallenge.ItemsSource = _obsUserListChallenge;
+            ListChallenge.ItemsSource = SingletonChallenge.Instance._obsUserListChallenge;
         }
 
         protected override void OnDisappearing()
@@ -119,15 +76,14 @@ namespace ChallengeApp.Views
             // Agrego el Handler creado a la pagina de detalles
             detailPage.ChallengeQuitted += (source, challenge) =>
             {
-                // Remuevo el Challenge de esta lista
-                _obsUserListChallenge.Remove(challenge);
+                // Remuevo el Challenge de esta lista de aceptados
+                SingletonChallenge.Instance._obsUserListChallenge.Remove(challenge);
 
                 // Agrego el Challenge a la lista de Rechazados
-                _quittedListChallenge.Add(challenge);
-
-                // Guardo el arreglo de Challenge para que pueda ser pasado a la otra lista
-                Application.Current.Properties[Constans.QuitChallengeUser] = JsonConvert.SerializeObject(_quittedListChallenge, Formatting.Indented);
-
+                if (SingletonChallenge.Instance._obsListChallenge != null)
+                {
+                    SingletonChallenge.Instance._obsListChallenge.Add(challenge);
+                }
             };
 
             await Navigation.PushAsync(detailPage); 

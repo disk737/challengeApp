@@ -74,6 +74,8 @@ namespace ChallengeApp.Views
                 await DisplayAlert("Error", "Ooops, Something is wrong, please try later.","OK");
             }
 
+            await Navigation.PopAsync();
+
         }
 
         // Metodo que se encarga del metodo de renunciar al reto
@@ -100,8 +102,8 @@ namespace ChallengeApp.Views
             {
                 await DisplayAlert("Error", "Ooops, Something is wrong, please try later.", "OK");
             }
+
+            await Navigation.PopAsync();
         }
-
-
     }
 }
