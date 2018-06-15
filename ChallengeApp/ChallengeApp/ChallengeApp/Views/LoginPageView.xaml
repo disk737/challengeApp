@@ -3,15 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChallengeApp.Views.LoginPageView"
              Padding="20,0,20,0">
-    <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="20" BackgroundColor="Aqua">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="20">
 
-        <Label Text="The Challenge App!!!!" HorizontalOptions="Center" FontSize="Large"/>
+        <Label Text="Miss Vero Challenge App!" 
+               HorizontalOptions="Center" 
+               FontSize="Large" 
+               TextColor="{StaticResource appColor}"/>
+
+        <Label Text="Login" 
+               HorizontalOptions="Center" 
+               FontSize="40" 
+               TextColor="{StaticResource appColor}" 
+               FontAttributes="Bold"/>
 
         <Entry x:Name="EntryEmail" Placeholder="Email" Keyboard="Email" />
 
         <Entry x:Name="EntryPassword" Placeholder="Password" IsPassword="True"/>
 
         <Button Text="Login" HorizontalOptions="Fill" Clicked="LoginHandler"/>
+
+        <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" Color="Gray"/>
+
+        <Label Text="Sign Up" HorizontalOptions="Center" TextColor="{StaticResource appColor}"/>
 
     </StackLayout>
 </ContentPage>

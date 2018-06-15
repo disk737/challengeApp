@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChallengeApp.App">
 	<Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="appColor">#5E75C3</Color>
+        </ResourceDictionary>
 
 		<!-- Application resource dictionary -->
 
