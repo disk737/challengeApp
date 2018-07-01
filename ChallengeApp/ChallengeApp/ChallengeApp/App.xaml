@@ -2,9 +2,18 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChallengeApp.App">
+    
 	<Application.Resources>
         <ResourceDictionary>
             <Color x:Key="appColor">#5E75C3</Color>
+
+            <!-- Styles -->
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource appColor}"/>
+                <Setter Property="BarTextColor" Value="White"/>
+            </Style>
+            <!-- Styles -->
+
         </ResourceDictionary>
 
 		<!-- Application resource dictionary -->
