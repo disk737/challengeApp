@@ -23,11 +23,23 @@
 
         <Entry x:Name="EntryPassword" Placeholder="Password" IsPassword="True"/>
 
+        <StackLayout HorizontalOptions="End" Orientation="Horizontal">
+
+            <Label Text="Save my password"/>
+
+            <Switch x:Name="SaveCredencials" IsToggled="False"/>
+
+        </StackLayout>
+        
+        
+        
         <Button Text="Login" HorizontalOptions="Fill" Clicked="LoginHandler"/>
 
         <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" Color="Gray"/>
 
-        <Label Text="Sign Up" HorizontalOptions="Center" TextColor="{StaticResource appColor}"/>
+        <Label Text="Sign Up" HorizontalOptions="Center" TextColor="{StaticResource appColor}" IsVisible="False"/>
+
+        
 
     </StackLayout>
 </ContentPage>
