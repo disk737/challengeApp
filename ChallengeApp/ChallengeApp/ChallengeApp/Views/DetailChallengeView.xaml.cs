@@ -43,10 +43,10 @@ namespace ChallengeApp.Views
             btnAccept.IsVisible = argExist;
             btnQuit.IsVisible = !argExist;
            
-            // No se si esta sea la mejor manera de mostrar el puntaje
-            User userInfo = new User { UserPoints = "25" };
+            //// No se si esta sea la mejor manera de mostrar el puntaje
+            //User userInfo = new User { UserPoints = "25" };
 
-            LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
+            //LabelPoints.Text = String.Format("Points: {0}", userInfo.UserPoints);
         }
 
         // Metodo que se encarga de manejar el evento de aceptar el reto

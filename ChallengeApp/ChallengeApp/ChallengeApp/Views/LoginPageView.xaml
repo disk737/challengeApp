@@ -2,7 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ChallengeApp.Views.LoginPageView"
-             Padding="20,0,20,0">
+             Padding="20,0,20,0"
+             NavigationPage.HasNavigationBar="False">
+    
+    
     <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="20">
 
         <Label Text="Miss Vero Challenge App!" 

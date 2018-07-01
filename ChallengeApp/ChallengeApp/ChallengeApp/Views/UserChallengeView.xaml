@@ -11,9 +11,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackLayout Grid.Row="0" Orientation="Horizontal" BackgroundColor="Silver">
+        <!--<StackLayout Grid.Row="0" Orientation="Horizontal" BackgroundColor="Silver">
             <Label x:Name="LabelPoints" HorizontalOptions="EndAndExpand"/>
-        </StackLayout>
+        </StackLayout>-->
 
         <ListView Grid.Row="1" x:Name="ListChallenge" ItemSelected="UserChallenge_ItemSelected">
             <ListView.ItemTemplate>

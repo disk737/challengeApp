@@ -3,7 +3,8 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:local="clr-namespace:ChallengeApp.Views"
             x:Class="ChallengeApp.Views.MainTabView"
-            NavigationPage.HasBackButton="False">
+            NavigationPage.HasBackButton="False"
+            BarBackgroundColor="{StaticResource appColor}">
 
     <local:ListChallengeView Title="List of Challenges"  />
 
