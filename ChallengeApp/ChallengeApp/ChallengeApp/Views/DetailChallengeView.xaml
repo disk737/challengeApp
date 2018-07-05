@@ -15,29 +15,63 @@
             <Label x:Name="LabelPoints" HorizontalOptions="EndAndExpand"/>
         </StackLayout>-->
 
+        
+
+
         <StackLayout Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="Aqua">
-            <Label Text="¿Que debes hacer?" 
-               FontAttributes="Bold" 
-               FontSize="Large" 
-               HorizontalTextAlignment="Center"/>
-            
-            <Label Text="{Binding ChallengeDescription}" 
-                   HorizontalTextAlignment="Center"
-                   FontSize="Medium"/>
 
-            <Label Text="¿Como lo demuestras?" 
-               FontAttributes="Bold" 
-               FontSize="Large" 
-               HorizontalTextAlignment="Center"/>
-            
-            <Label Text="{Binding ChallengeEvidence}" 
-                   HorizontalTextAlignment="Center"
-                   FontSize="Medium"/>
+            <StackLayout Orientation="Horizontal" BackgroundColor="Crimson">
 
-            <Label Text="{Binding ChallengePoint, StringFormat='Points: {0}'}" 
-                   HorizontalTextAlignment="Center"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
+                <Image VerticalOptions="Start" Source="ImgTable.png"/>
+
+                <StackLayout BackgroundColor="LemonChiffon">
+
+                    <Label Text="¿Que debes hacer?" 
+                       FontAttributes="Bold" 
+                       FontSize="Large" 
+                       HorizontalTextAlignment="Center"/>
+
+                    <Label Text="{Binding ChallengeDescription}" 
+                       HorizontalTextAlignment="Center"
+                       FontSize="Medium"/>
+
+                </StackLayout>
+                
+            </StackLayout>
+
+            <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" Color="Gray"/>
+            
+            <StackLayout Orientation="Horizontal" BackgroundColor="Crimson">
+
+                <Image VerticalOptions="Start" Source="ImgEye.png"/>
+
+                <StackLayout BackgroundColor="LemonChiffon">
+
+                    <Label Text="¿Como lo demuestras?" 
+                           FontAttributes="Bold" 
+                           FontSize="Large" 
+                           HorizontalTextAlignment="Center"/>
+
+                    <Label Text="{Binding ChallengeEvidence}" 
+                           HorizontalTextAlignment="Center"
+                           FontSize="Medium"/>
+
+                </StackLayout>
+
+            </StackLayout>
+
+            <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" Color="Gray"/>
+            
+            <StackLayout Orientation="Horizontal" BackgroundColor="Crimson">
+
+                <Image VerticalOptions="Start" Source="ImgRibbon.png"/>
+
+                <Label Text="{Binding ChallengePoint, StringFormat='Points: {0}'}" 
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Bold"
+                       FontSize="Medium"/>
+
+            </StackLayout>
 
             <Button x:Name="btnAccept" 
                     Text="Accept" 
