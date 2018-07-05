@@ -29,17 +29,6 @@ namespace ChallengeApp.Views
                 Application.Current.Properties.Remove(Constans.QuitChallengeUser);
             }
 
-            // Borro el contenido del array auxiliar si hubo un cambio en la Actividad
-            if (Application.Current.Properties.ContainsKey(Constans.FlagUserList))
-            {
-                Application.Current.Properties.Remove(Constans.FlagUserList);
-            }
-
-            // Borro el contenido del array auxiliar si hubo un cambio en la Actividad
-            if (Application.Current.Properties.ContainsKey(Constans.FlagChallengeList))
-            {
-                Application.Current.Properties.Remove(Constans.FlagChallengeList);
-            }
         }
 
         protected override void OnAppearing()

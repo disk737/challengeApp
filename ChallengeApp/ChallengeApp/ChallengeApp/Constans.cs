@@ -25,14 +25,10 @@ namespace ChallengeApp
         // Cadena que guarda el Token de seguridad
         public static string UserTokenString = "UserToken";
 
-        // Guardo la cadena que que representa un Challenge aceptado guardado
-        public static string StringAcceptedChallenge = "AcceptedChallenge";
+        // Cadenas que guardan la informacion del usuario
+        public static string UserEmail = "UserEmail";       // No se esta usando
+        public static string UserPassword = "UserPassword"; // No se esta usando
+        public static string SaveCredentials = "SaveCredentials";
 
-        // Guardo la cadena que que representa un Challenge rechazado guardado
-        public static string StringQuittedChallenge = "QuittedChallenge";
-
-        // Guardo la cadena que me indica un cambio de TAB
-        public static string FlagUserList = "FlagUserList";
-        public static string FlagChallengeList = "FlagChallengeList";
     }
 }
