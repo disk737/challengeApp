@@ -55,11 +55,18 @@ namespace ChallengeApp.Services
         // Metodo para hacer Logout y borrar el token del telefono
         public void UserLogout()
         {
-            // Si el Token se encuentra en el telefono lo debo de borrar
+            // Verifico que la Key exista dentro del telefono
             if (Application.Current.Properties.ContainsKey(Constans.SaveCredentials))
             {
+                // Cambio el estado de SaveCredentials a Inactivo
+                Application.Current.Properties[Constans.SaveCredentials] = Constans.SaveUnactive;
+            }
+
+            // Si el Token se encuentra en el telefono lo debo de borrar
+            if (Application.Current.Properties.ContainsKey(Constans.UserTokenString))
+            {
                 // Borro el contenido de la variable que contiene el Token
-                Application.Current.Properties.Remove(Constans.SaveCredentials);
+                Application.Current.Properties.Remove(Constans.UserTokenString);
             }
 
         }

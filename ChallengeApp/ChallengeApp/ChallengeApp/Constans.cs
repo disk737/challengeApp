@@ -26,8 +26,8 @@ namespace ChallengeApp
         public static string UserTokenString = "UserToken";
 
         // Cadenas que guardan la informacion del usuario
-        public static string UserEmail = "UserEmail";       // No se esta usando
-        public static string UserPassword = "UserPassword"; // No se esta usando
+        public static string SaveActive = "active";     // Cadena que se usa para indicar que el usuario pido guardar las credenciales
+        public static string SaveUnactive = "unactive"; // No se esta usando
         public static string SaveCredentials = "SaveCredentials"; // Me indica si las credenciales estan activas o no
 
     }

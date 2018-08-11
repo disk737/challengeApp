@@ -45,7 +45,7 @@ namespace ChallengeApp.Views
             
             if (oldToken != null && 
                 Application.Current.Properties.ContainsKey(Constans.SaveCredentials) && 
-                Application.Current.Properties[Constans.SaveCredentials] as string == "active")
+                Application.Current.Properties[Constans.SaveCredentials] as string == Constans.SaveActive)
             {
                 // Llamo la pagina principal de Tabs
                 await Navigation.PushAsync(new MainTabView());
@@ -68,9 +68,9 @@ namespace ChallengeApp.Views
 
                 // Si el usuario decidio guardar sus credenciales, procedo a guardarlas
                 if (SaveCredencials.IsToggled == true)
-                    Application.Current.Properties[Constans.SaveCredentials] = "active";
+                    Application.Current.Properties[Constans.SaveCredentials] = Constans.SaveActive;
                 else
-                    Application.Current.Properties[Constans.SaveCredentials] = "unactive";
+                    Application.Current.Properties[Constans.SaveCredentials] = Constans.SaveUnactive;
 
                 // Llamo la pagina principal de Tabs
                 await Navigation.PushAsync(new MainTabView());

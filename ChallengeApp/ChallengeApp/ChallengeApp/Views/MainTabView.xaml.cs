@@ -21,12 +21,7 @@ namespace ChallengeApp.Views
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-
-            // Guardo el Token que el usuario tiene en su movil
-            string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();
-
-            DisplayAlert("Challenge", userToken, "OK");            
+            base.OnAppearing();       
         }
 
         private async void ToolbarItem_Activated(object sender, EventArgs e)
