@@ -2,6 +2,7 @@
 using ChallengeApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace ChallengeApp.Views
 
         private string oldToken;
 
+        private bool activityActivated = false;
+
         public LoginPageView()
         {
             InitializeComponent();
@@ -27,18 +30,28 @@ namespace ChallengeApp.Views
         {
             base.OnAppearing();
 
-            // Reviso si tengo un Token viejo que pueda usar
-            // Extraigo el viejo Token
-            oldToken = Application.Current.Properties[Constans.UserTokenString].ToString();
+            if (activityActivated)
+                return;
 
-            if (oldToken != "" && Application.Current.Properties.ContainsKey(Constans.SaveCredentials) && Application.Current.Properties[Constans.SaveCredentials] as string == "active")
+            //Activo la bandera para que no se vuelva a llamar el Psuh de MainTabView
+            activityActivated = true;
+
+            // Reviso si tengo un Token viejo que pueda usar. Esto es un seguro
+            if (Application.Current.Properties.ContainsKey(Constans.UserTokenString))
+            {
+                // Extraigo el viejo Token
+                oldToken = Application.Current.Properties[Constans.UserTokenString].ToString();
+            }
+            
+            if (oldToken != null && 
+                Application.Current.Properties.ContainsKey(Constans.SaveCredentials) && 
+                Application.Current.Properties[Constans.SaveCredentials] as string == "active")
             {
                 // Llamo la pagina principal de Tabs
                 await Navigation.PushAsync(new MainTabView());
             }
 
             _userServices = new UserServices();
-
         }
 
         async private void LoginHandler(object sender, EventArgs e)
@@ -56,6 +69,8 @@ namespace ChallengeApp.Views
                 // Si el usuario decidio guardar sus credenciales, procedo a guardarlas
                 if (SaveCredencials.IsToggled == true)
                     Application.Current.Properties[Constans.SaveCredentials] = "active";
+                else
+                    Application.Current.Properties[Constans.SaveCredentials] = "unactive";
 
                 // Llamo la pagina principal de Tabs
                 await Navigation.PushAsync(new MainTabView());

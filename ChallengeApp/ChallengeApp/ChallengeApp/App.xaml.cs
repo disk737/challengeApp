@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +14,7 @@ namespace ChallengeApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new ChallengeApp.Views.LoginPageView());
+            MainPage = new NavigationPage(new ChallengeApp.Views.LoginPageView());    
         }
 
         protected override void OnStart()

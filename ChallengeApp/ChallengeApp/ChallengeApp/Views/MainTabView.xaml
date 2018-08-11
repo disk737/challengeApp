@@ -4,7 +4,13 @@
             xmlns:local="clr-namespace:ChallengeApp.Views"
             x:Class="ChallengeApp.Views.MainTabView"
             NavigationPage.HasBackButton="False"
+            Title="The Challenge"
             BarBackgroundColor="{StaticResource appColor}">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Icon="ImgLogout.png" Text="Logout" Activated="ToolbarItem_Activated" Order="Primary"/>
+
+    </TabbedPage.ToolbarItems>
 
     <local:ListChallengeView Title="List of Challenges"  />
 

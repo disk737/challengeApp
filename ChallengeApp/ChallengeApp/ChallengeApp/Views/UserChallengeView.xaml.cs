@@ -40,7 +40,7 @@ namespace ChallengeApp.Views
             if (SingletonChallenge.Instance._obsUserListChallenge != null)
                 return;
 
-            var userServices = new UserServices();
+            var userServices = new ChallengeServices();
 
             // Creo una lista que me guarde los Challenge
             _listChallenge = await userServices.GetUserChallengeList();

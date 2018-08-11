@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChallengeApp.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,34 +13,35 @@ namespace ChallengeApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainTabView : TabbedPage
     {
+       
         public MainTabView()
         {
             InitializeComponent();
-
-            // Borro cualqueir arreglo guardado en memoria
-            if (Application.Current.Properties.ContainsKey(Constans.AcceptChallengeUser))
-            {
-                // Borro el contenido de la variable
-                Application.Current.Properties.Remove(Constans.AcceptChallengeUser);
-            }
-
-            if (Application.Current.Properties.ContainsKey(Constans.QuitChallengeUser))
-            {
-                // Borro el contenido de la variable
-                Application.Current.Properties.Remove(Constans.QuitChallengeUser);
-            }
-
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
+            // Guardo el Token que el usuario tiene en su movil
             string userToken = Application.Current.Properties[Constans.UserTokenString].ToString();
 
-            DisplayAlert("Challenge", userToken, "OK");
-            // Guardo el token generado para el usuario
-                 
+            DisplayAlert("Challenge", userToken, "OK");            
+        }
+
+        private async void ToolbarItem_Activated(object sender, EventArgs e)
+        {
+            var response = await DisplayAlert("Exit", "Are you sure?", "Yes", "No");
+            if (response)
+            {
+                // Invoco el servicio de Logout
+                UserServices _userServices = new UserServices();
+                _userServices.UserLogout();
+
+                //LLamo el servicio que se encarga del Logout y vuelvo a la pagina de Login
+                await Navigation.PopAsync();
+            }
+                     
         }
     }
 }
